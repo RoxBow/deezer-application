@@ -1,13 +1,21 @@
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import type { FC } from 'react';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Spinner,
+} from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import { FC, useState } from 'react';
-import useSwr from 'swr';
+import { useApp } from '@components/AppProvider/App.context';
 
-const Search: FC<any> = () => {
-  const [term, setTerm] = useState('');
-  const { data } = useSwr(term ? `/api/search?term=${term}` : undefined);
+type SearchProps = Readonly<{
+  value: string;
+  onChange: (term: string) => void;
+}>;
 
-  console.log('data', data);
+const Search: FC<SearchProps> = ({ value, onChange }) => {
+  const { isLoading } = useApp();
 
   return (
     <InputGroup>
@@ -16,12 +24,18 @@ const Search: FC<any> = () => {
       </InputLeftElement>
 
       <Input
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder="On verra"
         variant="flushed"
         size="md"
       />
+
+      {isLoading && (
+        <InputRightElement>
+          <Spinner size="sm" />
+        </InputRightElement>
+      )}
     </InputGroup>
   );
 };

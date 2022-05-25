@@ -1,8 +1,36 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Search from '@components/Search/Search';
+import { AppContext } from '@components/AppProvider/App.context';
+import { useEffect, useMemo, useState } from 'react';
+import type { Track } from 'types/Track';
+import TrackList from '@components/TrackList/TrackList';
+import useSwr from 'swr';
 
 const Home: NextPage = () => {
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [term, setTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data, error } = useSwr(term ? `/api/search?term=${term}` : undefined);
+
+  useEffect(() => {
+    if (data) {
+      setTracks(data.data.data);
+      setIsLoading(false);
+    } else if (term && !data && !error) {
+      setIsLoading(true);
+    }
+  }, [term, data, error, setTracks]);
+
+  const contextValue = useMemo(
+    () => ({
+      setIsLoading,
+      isLoading,
+    }),
+    [isLoading, setIsLoading]
+  );
+
   return (
     <div>
       <Head>
@@ -11,9 +39,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Search />
-      </main>
+      <AppContext.Provider value={contextValue}>
+        <main>
+          <Search value={term} onChange={setTerm} />
+          <TrackList tracks={tracks} />
+        </main>
+      </AppContext.Provider>
     </div>
   );
 };
