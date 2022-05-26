@@ -9,8 +9,10 @@ import {
   TableContainer,
   Image,
   Box,
+  Link,
 } from '@chakra-ui/react';
 import type { Track } from 'types/Track';
+import LinkNext from 'next/link';
 
 type TrackListProps = Readonly<{
   tracks: Track[];
@@ -44,7 +46,11 @@ const TrackList: FC<TrackListProps> = ({ tracks }) => {
                 </Box>
               </Td>
               <Td>{track.title}</Td>
-              <Td>{track.artist.name}</Td>
+              <Td>
+                <LinkNext href={`/artist/${track.artist.id}`} passHref>
+                  <Link>{track.artist.name}</Link>
+                </LinkNext>
+              </Td>
               <Td>{track.album.title}</Td>
             </Tr>
           ))}

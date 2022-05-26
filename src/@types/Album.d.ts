@@ -9,4 +9,5 @@ export interface Album {
   md5_image: string;
   tracklist: string;
   type: string;
+  release_date?: string;
 }
