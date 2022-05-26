@@ -9,7 +9,7 @@ import useSwr from 'swr';
 
 const Home: NextPage = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState('on verra');
   const [isLoading, setIsLoading] = useState(false);
 
   const { data, error } = useSwr(term ? `/api/search?term=${term}` : undefined);
