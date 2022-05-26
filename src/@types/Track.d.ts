@@ -1,7 +1,7 @@
 import type { BaseArtist } from 'types/Artist';
 import type { BaseAlbum } from 'types/Album';
 
-export interface Track {
+export interface Track extends BaseTrack {
   id: number;
   readable: boolean;
   title: string;
@@ -12,5 +12,5 @@ export interface Track {
   preview: string;
   md5_image: string;
   artist: BaseArtist;
-  album: BaseAlbum;
+  album?: BaseAlbum;
 }
