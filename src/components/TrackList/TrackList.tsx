@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useState } from 'react';
 import {
   Table,
   Thead,
@@ -7,12 +7,15 @@ import {
   Th,
   Td,
   TableContainer,
-  Image,
+  IconButton,
   Box,
   Link,
+  Image,
 } from '@chakra-ui/react';
 import type { Track } from 'types/Track';
 import LinkNext from 'next/link';
+import { FaPlay } from 'react-icons/fa';
+import { useApp } from '@components/AppProvider/App.context';
 
 type TrackListProps = Readonly<{
   tracks: Track[];
@@ -20,6 +23,9 @@ type TrackListProps = Readonly<{
 }>;
 
 const TrackList: FC<TrackListProps> = ({ tracks, withAlbum = true }) => {
+  const [lineHover, setLineHover] = useState<number | null>(null);
+  const { setAudioPlay } = useApp();
+
   return (
     <TableContainer>
       <Table variant="simple">
@@ -34,8 +40,34 @@ const TrackList: FC<TrackListProps> = ({ tracks, withAlbum = true }) => {
         </Thead>
         <Tbody>
           {tracks.map((track, idx) => (
-            <Tr key={track.id}>
-              <Td>{idx + 1}</Td>
+            <Tr
+              key={track.id}
+              onMouseOver={() => setLineHover(track.id)}
+              onMouseOut={() => setLineHover(null)}
+            >
+              <Td>
+                {lineHover !== track.id ? (
+                  idx + 1
+                ) : (
+                  <IconButton
+                    aria-label={`Play ${track.title}`}
+                    icon={<FaPlay />}
+                    variant="unstyled"
+                    onClick={() =>
+                      setAudioPlay({
+                        trackTitle: track.title,
+                        artist: {
+                          id: track.artist.id,
+                          name: track.artist.name,
+                        },
+                        src: track.preview,
+                        albumCover: track.album ? track.album.cover_medium : '',
+                      })
+                    }
+                  />
+                )}
+              </Td>
+
               {track.album && (
                 <Td>
                   <Box width="50px" height="50px">
