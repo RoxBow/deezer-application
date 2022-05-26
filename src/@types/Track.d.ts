@@ -1,5 +1,5 @@
-import type { Artist } from './Artist';
-import type { Album } from './Album';
+import type { BaseArtist } from 'types/Artist';
+import type { BaseAlbum } from 'types/Album';
 
 export interface Track {
   id: number;
@@ -11,6 +11,6 @@ export interface Track {
   duration: number;
   preview: string;
   md5_image: string;
-  artist: Artist;
-  album: Album;
+  artist: BaseArtist;
+  album: BaseAlbum;
 }

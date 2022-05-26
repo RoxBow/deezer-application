@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
-import type { Album } from 'types/Album';
+import type { BaseAlbum } from 'types/Album';
 import AlbumItem from '@components/AlbumList/AlbumItem';
 
 type AlbumListProps = Readonly<{
-  albums: Album[];
+  albums: BaseAlbum[];
 }>;
 
 const AlbumList: FC<AlbumListProps> = ({ albums }) => {

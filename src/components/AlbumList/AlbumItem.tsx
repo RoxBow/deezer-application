@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { Flex, Box, Image } from '@chakra-ui/react';
-import type { Album } from 'types/Album';
+import type { BaseAlbum } from 'types/Album';
 
 type AlbumItemProps = Readonly<{
-  album: Album;
+  album: BaseAlbum;
 }>;
 
 const AlbumItem: FC<AlbumItemProps> = ({ album }) => {

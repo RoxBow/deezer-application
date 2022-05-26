@@ -1,4 +1,4 @@
-export interface Artist {
+export interface BaseArtist {
   id: number;
   name: string;
   link: string;
@@ -9,4 +9,10 @@ export interface Artist {
   picture_xl: string;
   tracklist: string;
   type: string;
+}
+
+export interface Artist extends BaseArtist {
+  nb_album: number;
+  nb_fan: number;
+  radio: boolean;
 }
