@@ -29,6 +29,7 @@ const Search: FC<SearchProps> = ({ value, onChange }) => {
         placeholder="On verra"
         variant="flushed"
         size="md"
+        autoFocus
       />
 
       {isLoading && (
