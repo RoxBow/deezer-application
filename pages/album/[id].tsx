@@ -1,14 +1,6 @@
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
-import {
-  Spinner,
-  Flex,
-  Image,
-  Heading,
-  Link,
-  ListItem,
-  Box,
-} from '@chakra-ui/react';
+import { Spinner, Flex, Image, Heading, Link, Box } from '@chakra-ui/react';
 import LinkNext from 'next/link';
 
 import TrackList from '@components/TrackList/TrackList';
@@ -36,8 +28,10 @@ const ArtistPage = () => {
     duration,
   } = data as Album;
 
+  const releaseYear = release_date.split('-')[0];
+
   return (
-    <Flex direction="column" p={10}>
+    <Flex as="main" direction="column" p={10}>
       <Flex direction="row" align="center" mb={6}>
         <Image boxSize="220px" src={cover_big} alt={title} mr={6} />
 
@@ -46,7 +40,7 @@ const ArtistPage = () => {
             {title}
           </Heading>
 
-          <Flex direction="row" mb={2}>
+          <Flex direction="row" align="center" mb={2}>
             <Image
               borderRadius="full"
               boxSize="30px"
@@ -66,8 +60,9 @@ const ArtistPage = () => {
             <Box as="p" mr={2}>
               {formatTimeInMinute(duration)}min
             </Box>
-            <Box as="p">{formatBigNumber(fans)} fans</Box>
           </Flex>
+          <Box as="p">{formatBigNumber(fans)} fans</Box>
+          <Box as="p">{releaseYear}</Box>
         </Flex>
       </Flex>
 

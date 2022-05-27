@@ -25,7 +25,7 @@ const ArtistPage = () => {
   const { name, picture_big } = dataArtist as Artist;
 
   return (
-    <Flex direction="column" p={10}>
+    <Flex as="main" direction="column" p={10}>
       <Flex direction="row" align="center" mb={6}>
         <Image
           borderRadius="full"
