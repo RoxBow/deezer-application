@@ -6,8 +6,6 @@ import {
   Tr,
   Th,
   TableContainer,
-  Spinner,
-  Box,
 } from '@chakra-ui/react';
 import type { Track } from 'types/Track';
 import TrackItem from '@components/TrackList/TrackItem';
@@ -19,10 +17,9 @@ type TrackListProps = Readonly<{
 
 const TrackList: FC<TrackListProps> = ({ tracks, withAlbum = true }) => {
   const [lineHover, setLineHover] = useState<number | null>(null);
-  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <TableContainer ref={tableContainerRef}>
+    <TableContainer>
       <Table variant="simple">
         <Thead>
           <Tr>

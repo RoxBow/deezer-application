@@ -1,6 +1,6 @@
 import useSwr from 'swr';
 import { useRouter } from 'next/router';
-import { Spinner, Flex, Image, Heading } from '@chakra-ui/react';
+import { Flex, Image, Heading } from '@chakra-ui/react';
 import TrackList from '@components/TrackList/TrackList';
 import type { Artist } from 'types/Artist';
 import AlbumList from '@components/AlbumList/AlbumList';
