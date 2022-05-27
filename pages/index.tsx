@@ -9,37 +9,23 @@ import useSwr from 'swr';
 const Home: NextPage = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [term, setTerm] = useState('on verra');
-  const [indexPagination, setIndexPagination] = useState(0);
 
-  const { setIsLoading, isLoading } = useApp();
-  const { data, error } = useSwr(
-    term ? `/api/search?term=${term}&index=${indexPagination}` : undefined
-  );
+  const { setIsLoading } = useApp();
+  const { data, error } = useSwr(term ? `/api/search?term=${term}` : undefined);
 
   useEffect(() => {
-    if (data && indexPagination > 0) {
-      setTracks((prevTracks) => [...prevTracks, ...data.data.data]);
-      setIsLoading(false);
-    } else if (data && indexPagination === 0) {
+    if (data) {
       setTracks(data.data.data);
       setIsLoading(false);
     } else if (term && !data && !error) {
       setIsLoading(true);
     }
-  }, [term, data, error, setTracks, setIsLoading, indexPagination]);
+  }, [term, data, error, setTracks, setIsLoading]);
 
   return (
     <main>
       <Search value={term} onChange={setTerm} />
-      <TrackList
-        tracks={tracks}
-        loadMore={() => {
-          if (!isLoading) {
-            setIndexPagination((prevPagination) => prevPagination + 25);
-          }
-        }}
-        hasMore={!!data?.data?.next || false}
-      />
+      <TrackList tracks={tracks} />
     </main>
   );
 };

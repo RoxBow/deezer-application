@@ -11,10 +11,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { term, index } = req.query as QueryParameters;
+  const { term } = req.query as QueryParameters;
 
   const data = await axios
-    .get(`${EXTERNAL_API_URL}/search?q=track:"${term}"&index="${index}"`)
+    .get(`${EXTERNAL_API_URL}/search?q=track:"${term}"`)
     .then((res) => res.data);
 
   res.status(200).json({ data });

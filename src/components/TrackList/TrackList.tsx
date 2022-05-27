@@ -11,21 +11,13 @@ import {
 } from '@chakra-ui/react';
 import type { Track } from 'types/Track';
 import TrackItem from '@components/TrackList/TrackItem';
-import InfiniteScroll from 'react-infinite-scroller';
 
 type TrackListProps = Readonly<{
   tracks: Track[];
   withAlbum?: boolean;
-  loadMore?: () => void;
-  hasMore?: boolean;
 }>;
 
-const TrackList: FC<TrackListProps> = ({
-  tracks,
-  withAlbum = true,
-  loadMore,
-  hasMore,
-}) => {
+const TrackList: FC<TrackListProps> = ({ tracks, withAlbum = true }) => {
   const [lineHover, setLineHover] = useState<number | null>(null);
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -42,24 +34,7 @@ const TrackList: FC<TrackListProps> = ({
           </Tr>
         </Thead>
 
-        <InfiniteScroll
-          element={Tbody}
-          initialLoad={false}
-          pageStart={0}
-          loadMore={() => {
-            if (loadMore) loadMore();
-          }}
-          getScrollParent={() => tableContainerRef.current}
-          hasMore={hasMore}
-          useWindow={false}
-          loader={
-            <Box as="tr" key="loader">
-              <Box as="td" colSpan={5} textAlign="center" p={3}>
-                <Spinner />
-              </Box>
-            </Box>
-          }
-        >
+        <Tbody>
           {tracks.map((track, idx) => (
             <TrackItem
               key={track.id}
@@ -69,7 +44,7 @@ const TrackList: FC<TrackListProps> = ({
               index={idx + 1}
             />
           ))}
-        </InfiniteScroll>
+        </Tbody>
       </Table>
     </TableContainer>
   );
